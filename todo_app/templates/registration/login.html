@@ -1,0 +1,52 @@
+{% extends 'registration/base.html' %} 
+
+{% block content %}
+<section class="py-8">
+  <div class="container mx-auto">
+    <div class="flex flex-col items-center">
+      <h1 class="mt-5 mb-3 text-3xl font-bold">Login</h1>
+    </div>
+    <div class="flex flex-col items-center">
+      <div class="w-full max-w-md mt-3">
+        <form method="post" action="{% url 'login' %}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          {% csrf_token %}
+          <div class="mb-4">
+            {{ form.username.label_tag }}
+            <input
+              type="text"
+              name="username"
+              class="border-2 border-gray-400 rounded-lg w-full py-2 px-4"
+              maxlength="150"
+              id="id_username"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            {{ form.password.label_tag }}
+            <input
+              type="password"
+              name="password"
+              class="border-2 border-gray-400 rounded-lg w-full py-2 px-4"
+              id="id_password"
+              required
+            />
+          </div>
+          {% if form.non_field_errors %} {% for error in form.non_field_errors %}
+          <p style="font-size: 13px;">
+            {{ error|escape }}
+          </p>
+          {% endfor %} {% endif %}
+         
+
+          <div class="flex justify-between items-center">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Login
+            </button>
+            <a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="{%url 'register'%}">Register</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

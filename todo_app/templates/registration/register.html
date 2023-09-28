@@ -1,0 +1,38 @@
+{% extends 'registration/base.html' %}
+
+{% block content %}
+<section class="bg-gray-100 py-10">
+  <div class="container mx-auto">
+    <div class="text-center">
+      <h1 class="text-3xl font-bold mt-5 mb-3">Register</h1>
+    </div>
+    <div class="w-full max-w-md mx-auto mt-3">
+      <form method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-4">
+          {{ field.label_tag }}
+          <input
+            type="{% if 'password' in field.label_tag %}password{% else %}text{% endif %}"
+            name="{{ field.html_name }}"
+            class="w-full p-3 border-2 rounded-lg"
+            maxlength="{% if 'username' in field.label_tag %}150{% endif %}"
+            id="{{ field.id_for_label }}"
+            required
+          />
+          {% if field.errors %} {% for error in field.errors %}
+          <p class="text-red-500 text-sm">{{ error|escape }}</p>
+          {% endfor %} {% endif %}
+        </div>
+        {% endfor %}
+        <div class="flex justify-between items-center">
+          <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg mt-2">Register</button>
+          <a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="{%url 'login'%}">Login</a>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
